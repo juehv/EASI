@@ -1,0 +1,1 @@
+mstsc /admin /f /v %1
