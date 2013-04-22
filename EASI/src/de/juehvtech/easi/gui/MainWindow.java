@@ -4,7 +4,6 @@
  */
 package de.juehvtech.easi.gui;
 
-import de.juehvtech.easi.gui.ScanResultWindow;
 import de.juehvtech.easi.properties.Options;
 import de.juehvtech.easi.actions.networkscan.ScanManager;
 import de.juehvtech.easi.actions.listener.PingResultListener;
@@ -49,17 +48,16 @@ public class MainWindow extends javax.swing.JFrame implements PingResultListener
     public MainWindow() {
         initComponents();
 
+        // load database
         List<Host> hosts = db.loadHosts();
         if (hosts != null) {
             DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
             for (Host host : hosts) {
                 model.addRow(new Object[]{host.getName(), host.getIpAddress(), host.getMac(), false});
             }
+        } else {
+            JOptionPane.showMessageDialog(this, "No hostfile found!\nAn empty file was created.");
         }
-
-        this.setIconImage(Toolkit.getDefaultToolkit()
-                .createImage(ClassLoader
-                .getSystemResource("de/juehvtech/easi/properties/icon/network_tools.png")));
     }
 
     private Host getHost() {
@@ -98,6 +96,9 @@ public class MainWindow extends javax.swing.JFrame implements PingResultListener
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("EASI - Easy And Simple Intranet Manager");
+        setIconImage(Toolkit.getDefaultToolkit()
+            .createImage(ClassLoader
+                .getSystemResource("de/juehvtech/easi/properties/icon/network_tools.png")));
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
